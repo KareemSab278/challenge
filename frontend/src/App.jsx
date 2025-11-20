@@ -1,35 +1,50 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from "react";
+import { ModalComponent } from "./components/Modal";
+import { ColorModeToggle } from "./components/ColorModeToggle";
+import { NavigationBar } from "./components/NavigationBar";
+import { Routing } from "./logic/routing.jsx";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [navigationOpened, setNavigationOpened] = useState(false);
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+
+  const style =
+    theme === "dark"
+      ? {
+          backgroundColor: "#333",
+          color: "#e0e0e0ff",
+          minHeight: "100vh",
+          padding: "20px",
+        }
+      : {
+          backgroundColor: "#e0e0e0ff",
+          color: "#333",
+          minHeight: "100vh",
+          padding: "20px",
+        };
+  useEffect(() => {
+    document.documentElement.style.setProperty(
+      "--font-color",
+      theme === "dark" ? "#e0e0e0ff" : "#333"
+    );
+    document.documentElement.style.setProperty(
+      "--background-color",
+      theme === "dark" ? "#333" : "#e0e0e0ff"
+    );
+  }, [theme]);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <section style={style}>
+      <button onClick={() => setNavigationOpened(true)}>Open Navigation</button>
+      <NavigationBar
+        navigationOpened={navigationOpened}
+        onClose={() => setNavigationOpened(false)}
+        theme={theme}
+      />
+      <ColorModeToggle theme={theme} setTheme={setTheme} />
+      <Routing />
+    </section>
+  );
 }
 
-export default App
+export default App;
