@@ -1,0 +1,22 @@
+### Anime Routes
+- GET /api/anime  
+- GET /api/anime/:id  
+  Test data: Replace :id with 1
+- POST /api/anime  
+  Test data: {"title": "Naruto", "description": "A ninja story", "release_year": 2002, "episodes": 220, "cover_image": "url_to_image"}
+- PUT /api/anime/:id  
+  Test data: Replace :id with 1, body: {"title": "Updated Title"}
+- DELETE /api/anime/:id  
+  Test data: Replace :id with 1
+
+### Users Routes
+- POST /api/users/register  
+  Test data: {"username": "testuser", "email": "test@example.com", "password": "password123"}
+- POST /api/users/login  
+  Test data: {"username": "testuser", "password": "password123"}
+
+### Reviews Routes
+- POST /api/reviews  
+  Test data: {"anime_id": 1, "user_id": 1, "review": "Great anime!"}
+- GET /api/reviews/anime/:animeId  
+  Test data: Replace :animeId with 1
